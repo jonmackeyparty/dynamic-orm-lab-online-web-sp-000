@@ -53,10 +53,13 @@ class InteractiveRecord
   
   def self.find_by(attribute_hash)
     value = attribute_hash.values[0]
-    found = self.column_names.collect do |name| 
+    #found = self.column_names.collect do |name| 
+     # DB[:conn].execute("SELECT * FROM #{table_name} WHERE #{name} = ?", value)
+    #end
+    #found.delete_if{|x| x == []}.flatten!
+    self.column_names.find do |name| 
       DB[:conn].execute("SELECT * FROM #{table_name} WHERE #{name} = ?", value)
     end
-    found.delete_if{|x| x == []}.flatten!
   end
     
     
